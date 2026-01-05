@@ -44,7 +44,6 @@ public class UserService {
 
     public void deleteUser(Long id){
         findById(id);
-        this.userRepository.deleteById(id);
         try {
            this.userRepository.deleteById(id); 
         } catch (Exception e) {
