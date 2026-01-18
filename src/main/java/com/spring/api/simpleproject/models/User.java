@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -87,6 +89,7 @@ public class User {
         return result;
     }
 
+    @JsonIgnore
     public List<Task> getTasks() {
         return tasks;
     }

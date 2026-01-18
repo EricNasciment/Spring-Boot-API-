@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.api.simpleproject.models.Task;
+import com.spring.api.simpleproject.models.User;
 import com.spring.api.simpleproject.repositorys.TaskRepository;
 
 @Service
@@ -28,7 +29,11 @@ public class TaskService {
 
     @Transactional
     public Task CreateTask(Task obj){
+        User user = this.userService.findById(obj.getUser().getId());
+        obj.setId(null);
+        obj.setUser(user);
         return obj = this.taskRepository.save(obj);
+        
     }
 
     @Transactional
