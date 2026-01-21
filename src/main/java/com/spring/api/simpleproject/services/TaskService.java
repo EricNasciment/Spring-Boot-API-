@@ -1,10 +1,12 @@
 package com.spring.api.simpleproject.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.spring.api.simpleproject.models.Task;
 import com.spring.api.simpleproject.models.User;
@@ -27,8 +29,14 @@ public class TaskService {
              ));    
     }
 
+    
+    public List<Task> findAllByUserId(Long userId){
+        List <Task> tasks = this.taskRepository.findByUser_Id(userId);
+        return tasks;
+    }
+
     @Transactional
-    public Task CreateTask(Task obj){
+    public Task createTask(Task obj){
         User user = this.userService.findById(obj.getUser().getId());
         obj.setId(null);
         obj.setUser(user);

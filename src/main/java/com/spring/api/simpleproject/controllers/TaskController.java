@@ -1,9 +1,11 @@
 package com.spring.api.simpleproject.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +22,13 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
 @RequestMapping("/task")
+@Validated
 
 public class TaskController {
 
@@ -31,13 +36,22 @@ public class TaskController {
     private TaskService taskService;
 
 @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        this.taskService.findById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Task> findById(@PathVariable Long id){
+        Task obj = this.taskService.findById(id);
+        return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId){
+        List<Task> objs = this.taskService.findAllByUserId(userId);
+        return ResponseEntity.ok().body(objs);
+    }
+    
+    
+
  @PostMapping
-    public ResponseEntity<Void> create(@RequestBody Task obj){
+ @Validated
+    public ResponseEntity<Void> create(@Valid @RequestBody Task obj){
         this.taskService.createTask(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
         .path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -45,7 +59,8 @@ public class TaskController {
     }
  
  @PutMapping("/{id}")
- public ResponseEntity<Void> update(@RequestBody Task obj ,@PathVariable Long id){
+ @Validated
+ public ResponseEntity<Void> update(@Valid @RequestBody Task obj ,@PathVariable Long id){
        obj.setId(id);
        this.taskService.updateTask(obj);
        return ResponseEntity.noContent().build();
