@@ -10,27 +10,31 @@ function show(tasks){
 
     let tab =  
             `<thead> 
+            <tr>
             <th scope= "col">#</th>
             <th scope= "col">Description</th>
             <th scope= "col">Username</th>
             <th scope= "col">User Id</th>
-            </thead>; `
+            </tr>
+            </thead> `
 
-
+     tab += `<tbody>`;
      for (let task of tasks){
         tab += `
           <tr>
             <td scope= "row">${task.id}</td>
             <td scope= "row">${task.description}</td>
-            <td scope= "row">${task.username}</td>
-            <td scope= "row">${task.userId}</td>
+            <td scope= "row">${task.user.userName}</td>
+            <td scope= "row">${task.user.id}</td>
           </tr>
         `
      }      
-
+       tab += `</tbody>`;
      document.getElementById("tasks").innerHTML = tab;
 
-     async function getAPI(url){
+     
+}
+ async function getAPI(url){
         const response = await fetch(url,{ method: "GET"});
 
         var data = await response.json();
@@ -40,6 +44,4 @@ function show(tasks){
             show(data);
         }
      }
-
-     getAPI(url);
-}
+  getAPI(url);
