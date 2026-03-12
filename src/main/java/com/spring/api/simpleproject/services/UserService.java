@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import com.spring.api.simpleproject.repositorys.TaskRepository;
 import com.spring.api.simpleproject.repositorys.UserRepository;
 
 @Service

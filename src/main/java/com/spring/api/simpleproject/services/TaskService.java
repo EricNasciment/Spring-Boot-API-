@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.spring.api.simpleproject.models.Task;
 import com.spring.api.simpleproject.models.User;
 import com.spring.api.simpleproject.repositorys.TaskRepository;
