@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler implements AuthenticationFailureHandler {
 
 
-    @Value("${server.error.include-stacktrace}")
+    @Value("${spring.web.error.include-exception}")
     private boolean printStackTrace;
 
     @Override

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.api.simpleproject.models.Task;
 import com.spring.api.simpleproject.models.User;
 import com.spring.api.simpleproject.repositorys.TaskRepository;
+import com.spring.api.simpleproject.services.exceptions.CustomObjectNotFoundException;
+import com.spring.api.simpleproject.services.exceptions.DataBindingViolationException;
 
 @Service
 public class TaskService {
@@ -22,7 +24,7 @@ public class TaskService {
    public Task findById(Long id) {
 
         Optional<Task> task = this.taskRepository.findById(id);
-             return task.orElseThrow(() -> new RuntimeException(
+             return task.orElseThrow(() -> new CustomObjectNotFoundException(
                 "Tarefa não encontrada! id:" +id + "Tipo: " + Task.class.getName()
              ));    
     }
@@ -54,7 +56,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-           throw new RuntimeException("Não é possível excluir a tarefa pois há entidades relacionadas a ela.");
+           throw new DataBindingViolationException("Não é possível excluir a tarefa pois há entidades relacionadas a ela.");
         }
     }
 

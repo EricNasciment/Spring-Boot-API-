@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import com.spring.api.simpleproject.repositorys.UserRepository;
+import com.spring.api.simpleproject.services.exceptions.CustomObjectNotFoundException;
+import com.spring.api.simpleproject.services.exceptions.DataBindingViolationException;
 
 @Service
 public class UserService {
@@ -19,7 +21,7 @@ public class UserService {
     public User findById(Long id) {
 
         Optional<User> user = this.userRepository.findById(id);
-             return user.orElseThrow(() -> new RuntimeException(
+             return user.orElseThrow(() -> new CustomObjectNotFoundException(
                 "usuário não encontrado! id:" +id + "Tipo: " + User.class.getName()
              ));    
     }  
@@ -44,7 +46,7 @@ public class UserService {
         try {
            this.userRepository.deleteById(id); 
         } catch (Exception e) {
-            throw new RuntimeException  ("Não é possível excluir o usuário pois há entidades relacionadas a ele.");
+            throw new DataBindingViolationException("Não é possível excluir o usuário pois há entidades relacionadas a ele.");
         }
     }
 
